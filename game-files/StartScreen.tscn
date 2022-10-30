@@ -1,0 +1,67 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://pixeltype big theme.tres" type="Theme" id=1]
+[ext_resource path="res://Sprites/spritesheet-ConvertImage.png" type="Texture" id=2]
+[ext_resource path="res://start screen.gd" type="Script" id=3]
+[ext_resource path="res://StartScreen.gd" type="Script" id=4]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 192, 336, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ SubResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 75.0
+
+[node name="StartScreen" type="Node2D"]
+pause_mode = 2
+script = ExtResource( 4 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -1.0
+margin_bottom = -1.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="Sheep" type="KinematicBody2D" parent="CanvasLayer/ColorRect"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="CanvasLayer/ColorRect/Sheep"]
+position = Vector2( 1064, 303 )
+scale = Vector2( 9.8125, 9.53125 )
+frames = SubResource( 2 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CanvasLayer/ColorRect/Sheep"]
+pause_mode = 2
+position = Vector2( -2, 7 )
+build_mode = 1
+polygon = PoolVector2Array( 1024, 290, 1099, 275, 1122, 316, 1082, 356, 1022, 339 )
+
+[node name="Area2D" type="Area2D" parent="CanvasLayer/ColorRect"]
+position = Vector2( 1066, 316 )
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/ColorRect/Area2D"]
+position = Vector2( -5, 0 )
+shape = SubResource( 3 )
+
+[node name="Label" type="Label" parent="CanvasLayer/ColorRect"]
+margin_left = 368.0
+margin_top = 298.0
+margin_right = 944.0
+margin_bottom = 340.0
+theme = ExtResource( 1 )
+text = "Where is Samantha the Sheep?"
+
+[node name="Camera2D" type="Camera2D" parent="CanvasLayer/ColorRect"]
+offset = Vector2( 510, 300 )
+current = true
